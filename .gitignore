@@ -1,0 +1,14 @@
+unsloth_compiled_cache/
+src/.ipynb_checkpoints/
+__pycache__/
+checkpoints/
+wandb/
+src/grpo_harder_translate_lora/*
+unsloth_compiled_cache/*
+logs/
+data/wmt25-genmt-humeval.jsonl
+wandb.key
+models/
+/grpo_harder_translate_lora/*
+eval_output/*
+train_output/*

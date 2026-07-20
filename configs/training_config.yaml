@@ -1,0 +1,77 @@
+# ======================
+# Dataset
+# ======================
+dataset: wmt25
+split: train
+max_chars: 355
+
+# ======================
+# Model
+# ======================
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
+output_dir: ./grpo_harder_translate_lora
+
+max_seq_length: 1024
+load_in_4bit: false
+
+fast_inference: false
+gpu_memory_utilization: 0.9
+max_lora_rank: 32
+
+lora_rank: 32
+lora_dropout: 0.0
+target_modules: q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj
+
+# ======================
+# GRPO Training
+# ======================
+learning_rate: 5.0e-6 
+num_train_epochs: 1
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 1
+max_prompt_length: 512
+max_completion_length: 512
+num_generations: 4
+logging_steps: 1
+save_steps: 50
+seed: 42
+
+# ======================
+# Reward models
+# ======================
+reward_device: cuda:0
+td_estimator: comet
+comet_translation_model: nllb # average | nllb | helsinki
+sentinel_model: Prosho/sentinel-src-25
+sentinel_batch_size: 8
+
+embedder_model: sentence-transformers/all-MiniLM-L6-v2
+cola_model: textattack/roberta-base-CoLA
+
+sim_floor: 0.70
+diff_clip: 2.0
+
+# ======================
+# Reward weights
+# ======================
+w_td_diff_abs: 0.0
+w_td_diff_delta: 1.0
+w_format_strict: 0.0
+w_format_soft: 0.0
+w_format_tag_pen: 0.0
+w_len: 0.4
+w_single_pen: 0.0
+w_rep_pen: 0.0
+w_illegal_chars: 0.0
+w_semantic_sim: 0.8
+w_grammatical_cola: 0.5
+w_grammatical_ltp: 0.2
+
+# ======================
+# Weights & Biases
+# ======================
+wandb: true
+wandb_project: mt-breaker
+wandb_run_name: grpo-train-rollouts
+wandb_flush_every: 50
+wandb_samples_per_flush: 16

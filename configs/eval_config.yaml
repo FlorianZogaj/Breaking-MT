@@ -1,0 +1,35 @@
+# ======================
+# Models
+# ======================
+model: null                                                # Path to fine-tuned generation model. Set to null to evaluate on original sentences.
+model_judge: meta-llama/Meta-Llama-3.1-8B-Instruct
+
+# ======================
+# Dataset
+# ======================
+dataset: wmt25                      
+n_samples: -1                      # Number of samples to evaluate. Set to -1 for all.
+unique_original_sentences: true
+
+# ======================
+# Generation
+# ======================
+batch_size: 64
+max_new_tokens: 512
+temperature: 0.7
+top_p: 0.9
+do_sample: false
+seed: 42 
+num_generation: 2
+
+# ======================
+# Paths
+# ======================
+path_to_save: ./evaluation/
+
+
+# ======================
+# Embedding similarity
+# ======================
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+device: cuda
